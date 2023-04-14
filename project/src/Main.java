@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,6 +10,7 @@ public class Main {
         System.out.println("1 - добавить точку");
         System.out.println("2 - список точек");
         System.out.println("3 - добавить случайные точки");
+        System.out.println("4 - сохранить точки");
     }
 
     static double[] x1 = new double[100];
@@ -71,6 +74,23 @@ public class Main {
         System.out.println("Точки добавлены");
     }
 
+    static void save() {
+        try {
+            PrintStream out = new PrintStream("data.txt");
+            out.println(count1);
+            for (int i = 0; i < count1; i++) {
+                out.printf("%.3f %.3f\n", x1[i], y1[i]);
+            }
+            out.println(count2);
+            for (int i = 0; i < count2; i++) {
+                out.printf("%.3f %.3f\n", x2[i], y2[i]);
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int reqest;
@@ -84,6 +104,8 @@ public class Main {
                     show(); break;
                 case 3:
                     rnd(sc); break;
+                case 4:
+                    save(); break;
                 default:
                     System.out.println("Нет такого варианта. Читай внимательней."); break;
             }
